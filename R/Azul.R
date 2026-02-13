@@ -24,6 +24,30 @@
     slots = c(api_header = "character")
 )
 
+#' The R Interface to the Human Cell Atlas Data Portal
+#'
+#' @description The `Azul()` function provides an interface to the Human Cell
+#'   Atlas Data Portal API, allowing users to access and query the data portal
+#'   programmatically. The function establishes a connection to the API and
+#'   retrieves the OpenAPI specification, which defines the available endpoints
+#'   and their parameters. Users can then use this connection to make requests
+#'   to the API and retrieve data from the Human Cell Atlas Data Portal.
+#'
+#' @param hostname `character(1)` The internet location of the service (default:
+#'   'service.azul.data.humancellatlas.org').
+#'
+#' @param protocol `character(1)` The internet protocol used to access the
+#'   hostname (default: 'https')
+#'
+#' @param api. `character(1)` The directory location of the API protocol within
+#'   the hostname (default: '/openapi.json').
+#'
+#' @param token `character(1)` The Authorization Bearer token e.g.,
+#'   "63eba81c-2591-4e15-9d1c-fb6e8e51e35d" or a path to text file.
+#'
+#' @examples
+#' azul <- Azul()
+#'
 #' @export
 Azul <- function(
     hostname = "service.azul.data.humancellatlas.org",
@@ -45,8 +69,9 @@ Azul <- function(
             ),
             authenticate = FALSE,
             api_reference_url = apiUrl,
+            api_reference_md5sum = "07d8cb088b71c0bd5eb27a130c05dd8d",
             api_reference_headers = token,
-            package = "cBioPortalData",
+            package = "BiocAzul",
             schemes = protocol
         )
     }, warning = function(w) {
