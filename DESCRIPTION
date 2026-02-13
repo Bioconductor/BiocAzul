@@ -1,9 +1,11 @@
 Package: BiocAzul
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Programmatic Access to the Azul API via R
+Version: 0.99.0
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Marcel", "Ramos", , "marcel.ramos@sph.cuny.edu", c("aut", "cre"),
+    c(ORCID = "0000-0002-3242-0582"))
+Description: Represents the OpenAPI v2 Azul API as an R object for performing
+    requests. The infrastructure uses the AnVIL and rapiclient packages.
 License: Artistic-2.0
 Depends:
     R (>= 4.6.0),
