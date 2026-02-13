@@ -10,6 +10,8 @@ License: Artistic-2.0
 Depends:
     R (>= 4.6.0),
     AnVIL
+Imports:
+    methods
 Suggests:
     BiocStyle,
     knitr,
