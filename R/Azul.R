@@ -1,5 +1,6 @@
 .api_header <- function(x) x@api_header
 
+#' @importFrom methods is
 .parse_token <- function(token_file) {
     token <- try({
         as.character(read.dcf(token_file, fields = "token"))
