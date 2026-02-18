@@ -1,5 +1,5 @@
 # setwd("~/bioc/BiocAzul")
-file_loc <- "inst/service/azul/api.json"
+file_loc <- "inst/service/azul/openapi.json"
 
 download.file(
     url = "https://service.azul.data.humancellatlas.org/openapi.json",

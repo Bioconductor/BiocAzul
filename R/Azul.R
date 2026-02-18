@@ -1,4 +1,5 @@
 .api_header <- function(x) x@api_header
+.AZUL_API_REFERENCE_VERSION <- "15.1"
 
 #' @importFrom methods is
 .parse_token <- function(token_file) {
@@ -81,7 +82,7 @@ Azul <- function(
     apiUrl <- paste0(protocol, "://", hostname, api.)
     service <- withCallingHandlers({
         Service(
-            service = "Azul",
+            service = "azul",
             host = hostname,
             config = httr::config(
                 ssl_verifypeer = 0L,
@@ -89,9 +90,8 @@ Azul <- function(
                 http_version = 0L
             ),
             authenticate = FALSE,
+            api_reference_version = .AZUL_API_REFERENCE_VERSION,
             api_reference_url = apiUrl,
-            api_reference_md5sum = "5927c881b5ffced463f47b65c8662a16",
-            api_reference_headers = token,
             package = "BiocAzul",
             schemes = protocol
         )
