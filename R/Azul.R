@@ -90,7 +90,7 @@ Azul <- function(
             ),
             authenticate = FALSE,
             api_reference_url = apiUrl,
-            api_reference_md5sum = "07d8cb088b71c0bd5eb27a130c05dd8d",
+            api_reference_md5sum = "5927c881b5ffced463f47b65c8662a16",
             api_reference_headers = token,
             package = "BiocAzul",
             schemes = protocol
