@@ -11,7 +11,10 @@ Depends:
     R (>= 4.6.0),
     AnVIL
 Imports:
-    methods
+    dplyr,
+    httr,
+    methods,
+    tidyr
 Suggests:
     BiocStyle,
     knitr,
