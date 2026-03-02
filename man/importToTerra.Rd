@@ -75,7 +75,9 @@ accession. Similarly,
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{list(
     accessions = list(
-        is = list(list(accession ="ERP112843"))
+        is = list(
+            list(accession ="ERP112843")
+        )
     )
 )
 }\if{html}{\out{</div>}}
@@ -116,4 +118,7 @@ importToTerra(
     )
 )
 \dontshow{\}) # examplesIf}
+}
+\seealso{
+\code{\link[=makeFilter]{makeFilter()}}
 }

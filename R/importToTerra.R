@@ -55,7 +55,9 @@
 #'   ```r
 #'   list(
 #'       accessions = list(
-#'           is = list(list(accession ="ERP112843"))
+#'           is = list(
+#'               list(accession ="ERP112843")
+#'           )
 #'       )
 #'   )
 #'   ```
@@ -86,6 +88,8 @@
 #'   entities that have no organism age.
 #'
 #' @importFrom AnVIL Terra
+#'
+#' @seealso [makeFilter()]
 #'
 #' @examplesIf interactive()
 #' importToTerra(
@@ -118,18 +122,19 @@ importToTerra <- function(
     terra <- Terra()
     AnVILPublish:::.create_workspace(
         namespace = namespace,
-        name = workspace
+        name = name
     )
-    res <- terra$createImportJob(
+    job_result <- terra$createImportJob(
         workspaceNamespace = namespace,
         workspaceName = workspace,
         filetype = "pfb",
         url = service_url
     )
+    jobId <- httr::content(job_result)$jobId
     terra$importJobStatus(
         workspaceNamespace = namespace,
         workspaceName = workspace,
-        jobId = httr::content(res)$jobId
+        jobId = jobId
     ) |>
         httr::content()
 }
