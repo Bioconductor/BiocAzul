@@ -3,6 +3,7 @@
 export(Azul)
 export(availableFacets)
 export(facetTable)
+export(importToTerra)
 export(listCatalogs)
 export(projectTable)
 exportClasses(Azul)
