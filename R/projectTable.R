@@ -14,10 +14,18 @@
 #'
 #' @importFrom httr content
 #'
+#' @returns * `projectTable`: A tibble with three columns: `term`, `count`, and
+#'   `projectId`. The `term` column contains the project names, the `count`
+#'   column contains the number of occurrences of each project in the specified
+#'   catalog, and the `projectId` column contains the unique identifiers for
+#'   each project.
+#'
 #' @examples
 #' azul <- Azul()
+#'
 #' listCatalogs(azul)
 #' projectTable(azul, catalog = "dcp56")
+#'
 #' @export
 projectTable <- function(
     api,
@@ -36,10 +44,63 @@ projectTable <- function(
 
 #' @rdname Azul-utils
 #'
+#' @returns * `listCatalogs`: A character vector of catalog names that are
+#'   available in the API.
+#'
+#' @examples
+#' listCatalogs(azul)
+#'
 #' @export
 listCatalogs <- function(api) {
-    res <- api$List_all_available_catalogs.() |>
-        content()
-    res[["catalogs"]] |>
+    api$List_all_available_catalogs.() |>
+        content() |>
+        `[[`(_, "catalogs") |>
         names()
+}
+
+#' @rdname Azul-utils
+#'
+#' @returns * `availableFacets`: A character vector of facet names that are
+#'   available for querying in the specified catalog.
+#'
+#' @examples
+#' availableFacets(azul)
+#'
+#' @export
+availableFacets <- function(api, catalog = c("dcp56", "dcp57", "lm10")) {
+    catalog <- match.arg(catalog)
+    projects <- api$`Search_an_index_for_entities_of_interest\n.`(
+        catalog = catalog, entity_type = "projects"
+    ) |>
+        content()
+    names(projects[["termFacets"]])
+}
+
+#' @rdname Azul-utils
+#'
+#' @param facet `character(1)` a facet term for which to produce a table of
+#'   tallies. The available facets can be obtained with `availableFacets()`.
+#'
+#' @examples
+#' facetTable(azul, "genusSpecies")
+#'
+#' @returns * `facetTable`: A tibble with two columns: `term` and `count`. The
+#'   `term` column contains the unique values of the specified facet, and the
+#'   `count` column contains the number of occurrences of each term in the
+#'   projects of the specified catalog.
+#'
+#' @export
+facetTable <-
+    function(api, facet, catalog = c("dcp56", "dcp57", "lm10"))
+{
+    catalog <- match.arg(catalog)
+    projects <- api$`Search_an_index_for_entities_of_interest\n.`(
+        catalog = catalog, entity_type = "projects"
+    ) |>
+        httr::content()
+    allFacets <- names(projects[["termFacets"]])
+    stopifnot("'facet' not found in termFacets" = facet %in% allFacets)
+
+    projects[["termFacets"]][[facet]][["terms"]] |>
+        dplyr::bind_rows()
 }

@@ -4,17 +4,52 @@
 \alias{Azul-utils}
 \alias{projectTable}
 \alias{listCatalogs}
+\alias{availableFacets}
+\alias{facetTable}
 \title{Obtain a list of projects and their IDs from the specified catalog}
 \usage{
 projectTable(api, catalog = c("dcp56", "dcp57", "lm10"))
 
 listCatalogs(api)
+
+availableFacets(api, catalog = c("dcp56", "dcp57", "lm10"))
+
+facetTable(api, facet, catalog = c("dcp56", "dcp57", "lm10"))
 }
 \arguments{
 \item{api}{\code{Azul} object representing the connection to the API.}
 
 \item{catalog}{\code{character(1)} specifying the catalog to query. Options
 include "dcp56", "dcp57", and "lm10" as given by \code{listCatalogs(api)}.}
+
+\item{facet}{\code{character(1)} a facet term for which to produce a table of
+tallies. The available facets can be obtained with \code{availableFacets()}.}
+}
+\value{
+\itemize{
+\item \code{projectTable}: A tibble with three columns: \code{term}, \code{count}, and
+\code{projectId}. The \code{term} column contains the project names, the \code{count}
+column contains the number of occurrences of each project in the specified
+catalog, and the \code{projectId} column contains the unique identifiers for
+each project.
+}
+
+\itemize{
+\item \code{listCatalogs}: A character vector of catalog names that are
+available in the API.
+}
+
+\itemize{
+\item \code{availableFacets}: A character vector of facet names that are
+available for querying in the specified catalog.
+}
+
+\itemize{
+\item \code{facetTable}: A tibble with two columns: \code{term} and \code{count}. The
+\code{term} column contains the unique values of the specified facet, and the
+\code{count} column contains the number of occurrences of each term in the
+projects of the specified catalog.
+}
 }
 \description{
 This function queries the specified catalog for projects and
@@ -24,6 +59,14 @@ options including "dcp56", "dcp57", and "lm10".
 }
 \examples{
 azul <- Azul()
+
 listCatalogs(azul)
 projectTable(azul, catalog = "dcp56")
+
+listCatalogs(azul)
+
+availableFacets(azul)
+
+facetTable(azul, "genusSpecies")
+
 }
