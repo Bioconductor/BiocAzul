@@ -23,14 +23,18 @@ e.g., \code{AnVILGCP::avworkspace_namespace()}, where the data will be imported.
 \item{name}{\code{character(1)} AnVIL workspace name as returned by, e.g.,
 \code{AnVILGCP::avworkspace_name()}, where the data will be imported.}
 
-\item{filters}{\code{list} A list of filters to apply when preparing the manifest.
-The filters should be structured according to the requirements of the Human
-Cell Atlas API, and will be converted to JSON format before being sent in
-the request to the API. See the details section for more information on the
-expected structure of the filters.}
+\item{filters}{\code{list()} A list of filters to apply when preparing the
+manifest. The filters should be structured according to the requirements of
+the Human Cell Atlas API, and will be converted to JSON format before being
+sent in the request to the API. See the details section for more
+information on the expected structure of the filters.}
 
 \item{catalog}{\code{character(1)} specifying the catalog to query. Options
 include "dcp56", "dcp57", and "lm10" as given by \code{listCatalogs(api)}.}
+
+\item{format}{\code{character(1)} The format of the manifest to be prepared.
+Currently, only "terra.pfb" is supported, which prepares the manifest in a
+format suitable for import into Terra.}
 }
 \description{
 This function is intended to facilitate the import of data from

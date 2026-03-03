@@ -16,11 +16,15 @@
 #' @param name `character(1)` AnVIL workspace name as returned by, e.g.,
 #'   `AnVILGCP::avworkspace_name()`, where the data will be imported.
 #'
-#' @param filters `list` A list of filters to apply when preparing the manifest.
-#'   The filters should be structured according to the requirements of the Human
-#'   Cell Atlas API, and will be converted to JSON format before being sent in
-#'   the request to the API. See the details section for more information on the
-#'   expected structure of the filters.
+#' @param filters `list()` A list of filters to apply when preparing the
+#'   manifest. The filters should be structured according to the requirements of
+#'   the Human Cell Atlas API, and will be converted to JSON format before being
+#'   sent in the request to the API. See the details section for more
+#'   information on the expected structure of the filters.
+#'
+#' @param format `character(1)` The format of the manifest to be prepared.
+#'   Currently, only "terra.pfb" is supported, which prepares the manifest in a
+#'   format suitable for import into Terra.
 #'
 #' @details The `filters` parameter should be a list that specifies the criteria
 #'   for selecting the data to be imported.
@@ -105,7 +109,8 @@
 #' @export
 importToTerra <- function(
     api, namespace, name, filters,
-    catalog = c("dcp56", "dcp57", "lm10"), format = "terra.pfb"
+    catalog = c("dcp56", "dcp57", "lm10"),
+    format = "terra.pfb"
 ) {
     catalog <- match.arg(catalog)
     stopifnot(
