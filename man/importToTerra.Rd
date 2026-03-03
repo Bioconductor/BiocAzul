@@ -112,6 +112,8 @@ entities that have no organism age.
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 importToTerra(
     azul,
+    namespace = "anvil-namespace",
+    name = "my-anvil-workspace",
     catalog = "dcp56",
     filters = list(
         projectId = list(is = "74b6d569-3b11-42ef-b6b1-a0454522b4a0")
