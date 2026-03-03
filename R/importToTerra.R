@@ -1,3 +1,11 @@
+.dotter <- function(ndots, maxlength) {
+    paste0(
+        paste0(rep(".", times = ndots), collapse = ""),
+        paste0(rep(" ", times = maxlength-ndots), collapse = ""),
+        collapse = ""
+    )
+}
+
 #' @title Import Data from the Human Cell Atlas Data Portal or the AnVIL Data
 #'   Repository to a Terra Workspace
 #'
@@ -96,6 +104,7 @@
 #' @seealso [makeFilter()]
 #'
 #' @examplesIf interactive()
+#' azul <- Azul()
 #' importToTerra(
 #'     azul,
 #'     namespace = "anvil-namespace",
@@ -126,22 +135,107 @@ importToTerra <- function(
 
     service_url <- httr::content(prep_manif)$Location
 
+    if (grepl("service.azul.data", service_url))
+        service_url <- httr::GET(service_url) |>
+            httr::content() |>
+            `[[`(_, "Location")
+
     terra <- Terra()
-    AnVILPublish:::.create_workspace(
-        namespace = namespace,
-        name = name
-    )
+    ## check if workspace already exists
+    tryCatch({
+        AnVILPublish:::.create_workspace(
+            namespace = namespace,
+            name = name
+        )
+    }, error = function(e) {
+        if (!grepl("already exists", conditionMessage(e)))
+            stop("Failed to create workspace: ", conditionMessage(e))
+        else
+            message("Workspace already exists: ", namespace, "/", name)
+    })
     job_result <- terra$createImportJob(
         workspaceNamespace = namespace,
-        workspaceName = workspace,
+        workspaceName = name,
         filetype = "pfb",
         url = service_url
     )
-    jobId <- httr::content(job_result)$jobId
-    terra$importJobStatus(
-        workspaceNamespace = namespace,
-        workspaceName = workspace,
-        jobId = jobId
-    ) |>
-        httr::content()
+    jobId <- httr::content(job_result)[["jobId"]]
+    message("Import job created with jobId: ", jobId)
+
+    .poll_import_job(terra, namespace, name, jobId)
+}
+
+.poll_import_job <- function(
+    terra, namespace, name, jobId,
+    timeout = getOption("BiocAzul.timeout", 300L)
+) {
+    .get_status <- function() {
+        terra$importJobStatus(
+            workspaceNamespace = namespace,
+            workspaceName = name,
+            jobId = jobId
+        ) |>
+            httr::content()
+    }
+
+    terminal_states <- c("Done", "Error")
+
+    start_time <- proc.time()[["elapsed"]]
+    attempt <- 1L
+
+    pb <- progress::progress_bar$new(
+        format = "  (:spin) Importing to Terra:dots :elapsed",
+        total = NA,
+        clear = FALSE
+    )
+
+    repeat {
+        elapsed <- proc.time()[["elapsed"]] - start_time
+
+        if (elapsed >= timeout)
+            stop(
+                "Import job timed out after ", timeout, " seconds",
+                call. = FALSE
+            )
+
+        jobStatus <- tryCatch(
+            .get_status(),
+            error = function(e) {
+                warning("Failed to poll job status: ", conditionMessage(e))
+                NULL
+            }
+        )
+
+        if (!is.null(jobStatus)) {
+            status <- jobStatus$status
+            if (status %in% terminal_states) {
+                pb$terminate()
+                if (identical(status, "Error"))
+                    stop(
+                        "Import job failed (jobId: ", jobId, "):\n  ",
+                        jobStatus$message %||% "no details provided"
+                    )
+                message(
+                    "Import complete in ", round(elapsed), " seconds"
+                )
+                return(
+                    invisible(
+                        list(
+                            jobId = jobId,
+                            status = status,
+                            elapsed = round(elapsed)
+                        )
+                    )
+                )
+            }
+        }
+
+        steps <- 10L
+        for (i in seq_len(steps)) {
+            pb$tick(tokens = list(dots = .dotter(i, 10)))
+            Sys.sleep(30 / steps)
+        }
+        attempt <- attempt + 1L
+
+    }
 }
