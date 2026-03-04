@@ -15,6 +15,7 @@ Imports:
     dplyr,
     httr,
     jsonlite,
+    progress,
     rlang,
     methods,
     tidyr
