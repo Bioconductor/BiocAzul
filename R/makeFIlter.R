@@ -2,6 +2,10 @@
     function(e1, e2) {
         force(e1)
         force(e2)
+        if (is.list(e2))
+            e2 <- as.data.frame(e2)
+        if (is.null(e2))
+            e2 <- NA
         structure(
             list(
                 list(is = e2)
@@ -23,25 +27,28 @@
     function(e1, e2) {
         force(e1)
         force(e2)
+        allLen2 <- TRUE
+        if (is.list(e2)) {
+            allLen2 <- all(
+                vapply(
+                    e2, function(x) identical(length(x), 2L), logical(1L)
+                )
+            )
+        }
+        if ((!is.list(e2) && !is.matrix(e2)) || !allLen2)
+            stop(
+                "Right-hand side of '%within%' operator must be a list",
+                " of length 2 vectors or a matrix",
+                .call = FALSE
+            )
+        if (is.list(e2))
+            e2 <- do.call(rbind, e2)
         structure(
             list(
                 structure(
                     list(e2),
                     .Names = type
                 )
-            ),
-            .Names = e1
-        )
-    }
-}
-
-.within_op <- function() {
-    function(e1, e2) {
-        force(e1)
-        force(e2)
-        structure(
-            list(
-                list(within = e2)
             ),
             .Names = e1
         )
