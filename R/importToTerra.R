@@ -50,15 +50,14 @@
 #'   the "within", "intersects", and "contains" relations, the field values must
 #'   come in nested pairs specifying upper and lower bounds, and multiple pairs
 #'   are combined using "and" logic. For example,
-#'   `list(donorCount = list(within = list(c(1, 5), c(5, 10))))` selects
-#'   entities whose donor organism count falls within both ranges, i.e., is
-#'   exactly 5. The accessions field supports filtering for a specific accession
-#'   and/or namespace within a project. For
-#'   example,
+#'   `list(donorCount = list(within = matrix(c(1, 5, 5, 10), 2L, 2L, TRUE)))`
+#'   selects entities whose donor organism count falls within both ranges, i.e.,
+#'   is exactly 5. The accessions field supports filtering for a specific
+#'   accession and/or namespace within a project. For example,
 #'   ```r
 #'   list(
 #'       accessions = list(
-#'           is = list(list(namespace = "array_express"))
+#'           is = data.frame(namespace = "array_express")
 #'       )
 #'   )
 #'   ```
@@ -67,9 +66,7 @@
 #'   ```r
 #'   list(
 #'       accessions = list(
-#'           is = list(
-#'               list(accession ="ERP112843")
-#'           )
+#'           is = data.frame(accession = "ERP112843")
 #'       )
 #'   )
 #'   ```
@@ -78,25 +75,25 @@
 #'   ```r
 #'   list(
 #'       accessions = list(
-#'           is = list(
-#'               list(namespace = "array_express", accession = "E-AAAA-00")
+#'           is = data.frame(
+#'               namespace = "array_express",
+#'               accession = "E-AAAA-000"
 #'           )
 #'       )
 #'   )
 #'   ```
-#'   will filter for projects that match both values. The organismAge field is
-#'   special in that it contains two property keys: value and unit. For example,
+#'   will filter for projects that match both values. The `organismAge` field is
+#'   special in that it contains two property keys: `value` and `unit`. For
+#'   example,
 #'
 #'   ```r
 #'   list(
-#'      organismAge = list(
-#'          is = list(
-#'              list(value = "20", unit = "year")
-#'          )
-#'      )
+#'       organismAge = list(
+#'           is = data.frame(value = "20", unit = "year")
+#'       )
 #'   )
 #'   ```
-#'   Both keys are required. `list(organismAge = list(is = list(NULL)))` selects
+#'   Both keys are required. `list(organismAge = list(is = NA))` selects
 #'   entities that have no organism age.
 #'
 #' @importFrom AnVIL Terra
