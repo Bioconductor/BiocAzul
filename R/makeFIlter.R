@@ -74,7 +74,7 @@
     if (is.symbol(expr))
         as.character(expr)
     else if (is.call(expr))
-        unlist(lapply(as.list(expr)[-1], .collect_fields))
+        unlist(lapply(as.list(expr)[-1L], .collect_fields))
     else
         character(0)
 }
@@ -96,9 +96,8 @@ makeFilter <- function(expr) {
     eval_env <- new.env(parent = as.environment(as.list(.f_env)))
 
     fields <- .collect_fields(fcomps)
-    for (field in fields) {
+    for (field in fields)
         assign(field, field, envir = eval_env)
-    }
 
     eval(fcomps, envir = eval_env)
 }

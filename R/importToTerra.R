@@ -133,7 +133,7 @@ importToTerra <- function(
         format = format
     )
 
-    service_url <- httr::content(prep_manif)$Location
+    service_url <- httr::content(prep_manif)[["Location"]]
 
     if (grepl("service.azul.data", service_url))
         service_url <- httr::GET(service_url) |>
@@ -141,7 +141,6 @@ importToTerra <- function(
             `[[`(_, "Location")
 
     terra <- Terra()
-    ## check if workspace already exists
     tryCatch({
         AnVILPublish:::.create_workspace(
             namespace = namespace,
@@ -207,13 +206,13 @@ importToTerra <- function(
         )
 
         if (!is.null(jobStatus)) {
-            status <- jobStatus$status
+            status <- jobStatus[["status"]]
             if (status %in% terminal_states) {
                 pb$terminate()
                 if (identical(status, "Error"))
                     stop(
                         "Import job failed (jobId: ", jobId, "):\n  ",
-                        jobStatus$message %||% "no details provided"
+                        jobStatus[["message"]] %||% "no details provided"
                     )
                 message(
                     "Import complete in ", round(elapsed), " seconds"
