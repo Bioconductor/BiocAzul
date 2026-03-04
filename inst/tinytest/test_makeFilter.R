@@ -12,10 +12,15 @@ expect_equal(
 
 # Combined filters with '&'
 expect_equal(
-    makeFilter(~ projectId == "abc" & organism == "Homo sapiens"),
+    makeFilter(
+        ~ projectId == "74b6d569-3b11-42ef-b6b1-a0454522b4a0" &
+            genusSpecies == "Mus musculus" &
+            fileFormat == "h5"
+    ),
     list(
-        projectId = list(is = "abc"),
-        organism = list(is = "Homo sapiens")
+        projectId = list(is = "74b6d569-3b11-42ef-b6b1-a0454522b4a0"),
+        genusSpecies = list(is = "Mus musculus"),
+        fileFormat = list(is = "h5")
     )
 )
 
