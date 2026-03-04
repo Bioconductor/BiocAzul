@@ -1,0 +1,145 @@
+---
+title: "Introduction to the BiocAzul package"
+author:
+- name: Marcel Ramos
+  affilitation: CUNY Graduate School of Public Health and Health Policy
+  email: marcel.ramos@sph.cuny.edu
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+package: BiocAzul
+output:
+  BiocStyle::html_document
+abstract: |
+  The BiocAzul package provides an interface to the Azul API, which is a service
+  that allows users to search and access data from the Human Cell Atlas (HCA)
+  and the AnVIL Data Explorer. This vignette introduces the BiocAzul package,
+  demonstrating how to use it to query data and integrate it with Terra
+  workspaces for further analysis.
+vignette: |
+  %\VignetteIndexEntry{Introduction to the BiocAzul package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# BiocAzul
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    cache = TRUE
+)
+```
+
+# Installation
+
+Install the development version of the `BiocAzul` package from GitHub using the
+following:
+
+```{r install, eval = FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("Bioconductor/BiocAzul")
+```
+
+# Load
+
+```{r load-packages, message=FALSE, eval=TRUE, cache=FALSE}
+library(BiocAzul)
+```
+
+# Introduction
+
+The `BiocAzul` package provides an interface to the Azul API, which is used
+to index data from the Human Cell Atlas (HCA) and the AnVIL Data Explorer.
+Azul provides a powerful query interface for searching and retrieving data
+from these projects.
+
+# Basic Usage
+
+To get started, create an `Azul` service object. By default, it connects to the
+Human Cell Atlas service.
+
+```{r azul-init}
+azul <- Azul()
+azul
+```
+
+## Listing Catalogs
+
+Azul organizes data into catalogs. You can list the available catalogs using
+`listCatalogs()`.
+
+```{r list-catalogs}
+listCatalogs(azul)
+```
+
+## Exploring Projects
+
+To get a quick overview of the projects in a catalog, use `projectTable()`.
+This returns a `tibble` with project names and their corresponding IDs.
+
+```{r project-table}
+projects <- projectTable(azul, catalog = "dcp56")
+head(projects)
+```
+
+## Exploring Facets
+
+Azul data is organized by facets, which are attributes you can use to filter
+and group data. You can list the available facets for a catalog using
+`availableFacets()`.
+
+```{r available-facets}
+facets <- availableFacets(azul, catalog = "dcp56")
+head(facets)
+```
+
+You can also get a summary of values for a specific facet using `facetTable()`.
+
+```{r facet-table}
+facetTable(azul, facet = "genusSpecies", catalog = "dcp56")
+```
+
+# Filtering and Queries
+
+The `makeFilter()` function provides a convenient way to create filters for
+querying the Azul API. It uses a formula-based syntax to define the filter
+criteria.
+
+```{r make-filter}
+filter <- makeFilter(
+    ~ projectId == "74b6d569-3b11-42ef-b6b1-a0454522b4a0" &
+        genusSpecies == "Mus musculus" &
+        fileFormat == "h5"
+)
+filter
+```
+
+This filter can be used in other functions that interact with the Azul API.
+
+# Integration with Terra
+
+One of the main features of `BiocAzul` is the ability to import data directly
+into a Terra workspace. This is done using the `importToTerra()` function.
+
+Note: This step requires a Terra workspace and appropriate permissions. The
+following code is for demonstration purposes and is not executed in this
+vignette.
+
+```{r import-to-terra, eval=FALSE}
+importToTerra(
+    azul,
+    namespace = "your-terra-namespace",
+    name = "your-terra-workspace",
+    catalog = "dcp56",
+    filters = filter
+)
+```
+
+This function will create a manifest based on the filters, initiate an import
+job in Terra, and poll for its completion.
+
+# Session Information
+
+```{r session-info}
+sessionInfo()
+```
