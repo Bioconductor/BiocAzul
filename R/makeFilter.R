@@ -39,7 +39,7 @@
             stop(
                 "Right-hand side of '%within%' operator must be a list",
                 " of length 2 vectors or a matrix",
-                .call = FALSE
+                call. = FALSE
             )
         if (is.list(e2))
             e2 <- do.call(rbind, e2)
