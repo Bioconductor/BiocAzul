@@ -86,3 +86,29 @@ expect_equal(
         )
     )
 )
+
+# %contains% operator
+expect_error(
+    makeFilter(~ fileFormat %contains% "fastq")
+)
+expect_equal(
+    makeFilter(~ donorCount %contains% list(c(1, 5), c(5, 10))),
+    list(donorCount = list(contains = matrix(c(1, 5, 5, 10), 2L, 2L, TRUE)))
+)
+
+# %intersect% operator
+expect_equal(
+    makeFilter(~ donorCount %intersect% list(c(1, 5), c(5, 10))),
+    list(donorCount = list(intersect = matrix(c(1, 5, 5, 10), 2L, 2L, TRUE)))
+)
+
+# Error cases for %within%
+expect_error(
+    makeFilter(~ donorCount %within% "not a list"),
+    "Right-hand side of '%within%' operator must be a list of length 2 vectors or a matrix"
+)
+
+expect_error(
+    makeFilter(~ donorCount %within% list(c(1, 2, 3))),
+    "Right-hand side of '%within%' operator must be a list of length 2 vectors or a matrix"
+)
