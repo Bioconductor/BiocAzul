@@ -45,6 +45,16 @@ expect_equal(
     )
 )
 
+# Use data.frame to specify accessions filter
+expect_equal(
+    makeFilter(~ accessions == data.frame(namespace = "array_express")),
+    list(
+        accessions = list(
+            is = data.frame(namespace = "array_express")
+        )
+    )
+)
+
 expect_equal(
     makeFilter(~ accessions == list(accession = "ERP112843")),
     list(
@@ -57,6 +67,22 @@ expect_equal(
 expect_equal(
     makeFilter(
         ~ accessions == list(
+            namespace = "array_express", accession = "E-AAAA-000"
+        )
+    ),
+    list(
+        accessions = list(
+            is = data.frame(
+                namespace = "array_express",
+                accession = "E-AAAA-000"
+            )
+        )
+    )
+)
+
+expect_equal(
+    makeFilter(
+        ~ accessions == data.frame(
             namespace = "array_express", accession = "E-AAAA-000"
         )
     ),
