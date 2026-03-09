@@ -29,6 +29,11 @@ expect_equal(
     makeFilter(~ donorCount %within% list(c(1, 5), c(5, 10))),
     list(donorCount = list(within = matrix(c(1, 5, 5, 10), 2L, 2L, TRUE)))
 )
+# Within operator with matrix
+expect_equal(
+    makeFilter(~ donorCount %within% matrix(c(1, 5, 5, 10), 2L, 2L, TRUE)),
+    list(donorCount = list(within = matrix(c(1, 5, 5, 10), 2L, 2L, TRUE)))
+)
 
 # Complex accessions filter
 expect_equal(

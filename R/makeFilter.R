@@ -76,6 +76,7 @@
 .f_env$`%intersect%` <- .op_gen("intersect")
 .f_env$list <- list
 .f_env$c <- c
+.f_env$matrix <- matrix
 
 .collect_fields <- function(expr) {
     if (is.symbol(expr))
