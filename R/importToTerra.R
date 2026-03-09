@@ -161,6 +161,7 @@ importToTerra <- function(
     .poll_import_job(terra, namespace, name, jobId)
 }
 
+#' @importFrom progress progress_bar
 .poll_import_job <- function(
     terra, namespace, name, jobId,
     timeout = getOption("BiocAzul.timeout", 300L)
