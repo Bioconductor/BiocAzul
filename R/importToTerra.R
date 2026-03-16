@@ -106,7 +106,7 @@
 #'     azul,
 #'     namespace = "anvil-namespace",
 #'     name = "my-anvil-workspace",
-#'     catalog = "dcp56",
+#'     catalog = "dcp57",
 #'     filters = list(
 #'         projectId = list(is = "74b6d569-3b11-42ef-b6b1-a0454522b4a0")
 #'     )
@@ -114,11 +114,12 @@
 #'
 #' @export
 importToTerra <- function(
-    api, namespace, name, filters,
-    catalog = c("dcp56", "dcp57", "lm10"),
-    format = "terra.pfb"
+    api, namespace, name, filters, catalog, format = "terra.pfb"
 ) {
-    catalog <- match.arg(catalog)
+    stopifnot(
+        "Invalid catalog specified. Use 'listCatalogs()' for all catalogs." =
+            catalog %in% listCatalogs(api)
+    )
     stopifnot(
         "Only 'terra.pfb' is currently supported" =
             identical(format, "terra.pfb")

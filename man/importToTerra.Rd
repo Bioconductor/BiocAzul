@@ -5,14 +5,7 @@
 \title{Import Data from the Human Cell Atlas Data Portal or the AnVIL Data
 Repository to a Terra Workspace}
 \usage{
-importToTerra(
-  api,
-  namespace,
-  name,
-  filters,
-  catalog = c("dcp56", "dcp57", "lm10"),
-  format = "terra.pfb"
-)
+importToTerra(api, namespace, name, filters, catalog, format = "terra.pfb")
 }
 \arguments{
 \item{api}{\code{Azul} object representing the connection to the API.}
@@ -29,8 +22,8 @@ the Human Cell Atlas API, and will be converted to JSON format before being
 sent in the request to the API. See the details section for more
 information on the expected structure of the filters.}
 
-\item{catalog}{\code{character(1)} specifying the catalog to query. Options
-include "dcp56", "dcp57", and "lm10" as given by \code{listCatalogs(api)}.}
+\item{catalog}{\code{character(1)} specifying the catalog to query. Options are
+given by \code{listCatalogs(api)}.}
 
 \item{format}{\code{character(1)} The format of the manifest to be prepared.
 Currently, only "terra.pfb" is supported, which prepares the manifest in a
@@ -116,7 +109,7 @@ importToTerra(
     azul,
     namespace = "anvil-namespace",
     name = "my-anvil-workspace",
-    catalog = "dcp56",
+    catalog = "dcp57",
     filters = list(
         projectId = list(is = "74b6d569-3b11-42ef-b6b1-a0454522b4a0")
     )

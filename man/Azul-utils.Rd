@@ -8,19 +8,19 @@
 \alias{facetTable}
 \title{Obtain a list of projects and their IDs from the specified catalog}
 \usage{
-projectTable(api, catalog = c("dcp56", "dcp57", "lm10"))
+projectTable(api, catalog)
 
 listCatalogs(api)
 
-availableFacets(api, catalog = c("dcp56", "dcp57", "lm10"))
+availableFacets(api, catalog)
 
-facetTable(api, facet, catalog = c("dcp56", "dcp57", "lm10"))
+facetTable(api, facet, catalog)
 }
 \arguments{
 \item{api}{\code{Azul} object representing the connection to the API.}
 
-\item{catalog}{\code{character(1)} specifying the catalog to query. Options
-include "dcp56", "dcp57", and "lm10" as given by \code{listCatalogs(api)}.}
+\item{catalog}{\code{character(1)} specifying the catalog to query. Options are
+given by \code{listCatalogs(api)}.}
 
 \item{facet}{\code{character(1)} a facet term for which to produce a table of
 tallies. The available facets can be obtained with \code{availableFacets()}.}
@@ -55,13 +55,14 @@ projects of the specified catalog.
 This function queries the specified catalog for projects and
 returns a tibble with project names and their corresponding IDs. The
 \code{catalog} parameter allows you to specify which catalog to query, with
-options including "dcp56", "dcp57", and "lm10".
+options including "dcp57", "dcp58", and "lm10" (e.g., when using the Human
+Cell Atlas API).
 }
 \examples{
 azul <- Azul()
 
 listCatalogs(azul)
-projectTable(azul, catalog = "dcp56")
+projectTable(azul, catalog = "dcp57")
 
 listCatalogs(azul)
 

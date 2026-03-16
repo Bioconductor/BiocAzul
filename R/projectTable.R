@@ -5,12 +5,13 @@
 #' @description This function queries the specified catalog for projects and
 #'   returns a tibble with project names and their corresponding IDs. The
 #'   `catalog` parameter allows you to specify which catalog to query, with
-#'   options including "dcp56", "dcp57", and "lm10".
+#'   options including "dcp57", "dcp58", and "lm10" (e.g., when using the Human
+#'   Cell Atlas API).
 #'
 #' @param api `Azul` object representing the connection to the API.
 #'
-#' @param catalog `character(1)` specifying the catalog to query. Options
-#'   include "dcp56", "dcp57", and "lm10" as given by `listCatalogs(api)`.
+#' @param catalog `character(1)` specifying the catalog to query. Options are
+#'   given by `listCatalogs(api)`.
 #'
 #' @importFrom httr content
 #'
@@ -24,14 +25,17 @@
 #' azul <- Azul()
 #'
 #' listCatalogs(azul)
-#' projectTable(azul, catalog = "dcp56")
+#' projectTable(azul, catalog = "dcp57")
 #'
 #' @export
 projectTable <- function(
     api,
-    catalog = c("dcp56", "dcp57", "lm10")
+    catalog
 ) {
-    catalog <- match.arg(catalog)
+    stopifnot(
+        "Invalid catalog specified. Use 'listCatalogs()' for all catalogs." =
+            catalog %in% listCatalogs(api)
+    )
     projs <- api$`Search_an_index_for_entities_of_interest\n.`(
         catalog = catalog, entity_type = "projects"
     ) |>
@@ -67,8 +71,11 @@ listCatalogs <- function(api) {
 #' availableFacets(azul)
 #'
 #' @export
-availableFacets <- function(api, catalog = c("dcp56", "dcp57", "lm10")) {
-    catalog <- match.arg(catalog)
+availableFacets <- function(api, catalog) {
+    stopifnot(
+        "Invalid catalog specified. Use 'listCatalogs()' for all catalogs." =
+            catalog %in% listCatalogs(api)
+    )
     projects <- api$`Search_an_index_for_entities_of_interest\n.`(
         catalog = catalog, entity_type = "projects"
     ) |>
@@ -91,9 +98,12 @@ availableFacets <- function(api, catalog = c("dcp56", "dcp57", "lm10")) {
 #'
 #' @export
 facetTable <-
-    function(api, facet, catalog = c("dcp56", "dcp57", "lm10"))
+    function(api, facet, catalog)
 {
-    catalog <- match.arg(catalog)
+    stopifnot(
+        "Invalid catalog specified. Use 'listCatalogs()' for all catalogs." =
+            catalog %in% listCatalogs(api)
+    )
     projects <- api$`Search_an_index_for_entities_of_interest\n.`(
         catalog = catalog, entity_type = "projects"
     ) |>
