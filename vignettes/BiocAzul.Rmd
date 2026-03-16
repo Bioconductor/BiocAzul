@@ -91,7 +91,7 @@ To get a quick overview of the projects in a catalog, use `projectTable()`.
 This returns a `tibble` with project names and their corresponding IDs.
 
 ```{r project-table}
-projects <- projectTable(hca, catalog = "dcp56")
+projects <- projectTable(hca, catalog = "dcp57")
 head(projects)
 ```
 
@@ -102,14 +102,14 @@ and group data. You can list the available facets for a catalog using
 `availableFacets()`.
 
 ```{r available-facets}
-facets <- availableFacets(hca, catalog = "dcp56")
+facets <- availableFacets(hca, catalog = "dcp57")
 head(facets)
 ```
 
 You can also get a summary of values for a specific facet using `facetTable()`.
 
 ```{r facet-table}
-facetTable(hca, facet = "genusSpecies", catalog = "dcp56")
+facetTable(hca, facet = "genusSpecies", catalog = "dcp57")
 ```
 
 # Filtering and Queries
@@ -143,7 +143,7 @@ importToTerra(
     hca,
     namespace = "your-terra-namespace",
     name = "your-terra-workspace",
-    catalog = "dcp56",
+    catalog = "dcp57",
     filters = filter
 )
 ```
