@@ -66,7 +66,7 @@ projectTable(azul, catalog = "dcp57")
 
 listCatalogs(azul)
 
-availableFacets(azul)
+availableFacets(azul, catalog = "dcp57")
 
 facetTable(azul, "genusSpecies")
 

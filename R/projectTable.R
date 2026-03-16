@@ -68,7 +68,7 @@ listCatalogs <- function(api) {
 #'   available for querying in the specified catalog.
 #'
 #' @examples
-#' availableFacets(azul)
+#' availableFacets(azul, catalog = "dcp57")
 #'
 #' @export
 availableFacets <- function(api, catalog) {
