@@ -12,7 +12,7 @@ Depends:
     R (>= 4.6.0),
     AnVIL
 Imports:
-    AnVILPublish,
+    AnVILPublish (>= 1.21.1),
     dplyr,
     httr,
     jsonlite,

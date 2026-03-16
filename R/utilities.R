@@ -11,24 +11,6 @@
     }
 })
 
-#' @importFrom httr status_code
-.create_workspace <-
-    function(namespace, name)
-{
-    createWorkspace <- .get_terra()$createWorkspace
-    response <- createWorkspace(
-        namespace = namespace,
-        name = name,
-        attributes = list(
-            description = jsonlite::unbox(
-                "Workspace created programmatically by BiocAzul"
-            )
-        )
-    )
-    if (status_code(response) >= 400L)
-        .stop(response, namespace, name, "create workspace failed")
-}
-
 #' @importFrom httr status_code http_status content
 .stop <-
     function(response, namespace, name, text)

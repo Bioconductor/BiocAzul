@@ -140,7 +140,7 @@ importToTerra <- function(
 
     terra <- Terra()
     tryCatch({
-        AnVILPublish:::.create_workspace(
+        AnVILPublish::create_workspace(
             namespace = namespace,
             name = name
         )
