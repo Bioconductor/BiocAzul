@@ -90,11 +90,6 @@ Azul <- function(
         Service(
             service = "azul",
             host = hostname,
-            config = httr::config(
-                ssl_verifypeer = 0L,
-                ssl_verifyhost = 0L,
-                http_version = 0L
-            ),
             authenticate = FALSE,
             api_reference_version = .AZUL_API_REFERENCE_VERSION,
             api_reference_url = apiUrl,
