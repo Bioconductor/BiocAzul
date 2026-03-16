@@ -89,7 +89,7 @@ availableFacets <- function(api, catalog) {
 #'   tallies. The available facets can be obtained with `availableFacets()`.
 #'
 #' @examples
-#' facetTable(azul, "genusSpecies")
+#' facetTable(azul, "genusSpecies", "dcp57")
 #'
 #' @returns * `facetTable`: A tibble with two columns: `term` and `count`. The
 #'   `term` column contains the unique values of the specified facet, and the

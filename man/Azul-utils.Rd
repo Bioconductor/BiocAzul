@@ -68,6 +68,6 @@ listCatalogs(azul)
 
 availableFacets(azul, catalog = "dcp57")
 
-facetTable(azul, "genusSpecies")
+facetTable(azul, "genusSpecies", "dcp57")
 
 }
