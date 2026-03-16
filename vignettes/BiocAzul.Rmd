@@ -50,7 +50,7 @@ library(BiocAzul)
 
 The `BiocAzul` package provides an interface to the Azul API, which is used
 to index data from the Human Cell Atlas (HCA) and the AnVIL Data Explorer.
-Azul provides a powerful query interface for searching and retrieving data
+Azul provides a convenient query interface for searching and retrieving data
 from these projects.
 
 # Basic Usage
@@ -58,10 +58,23 @@ from these projects.
 To get started, create an `Azul` service object. By default, it connects to the
 Human Cell Atlas service.
 
-```{r azul-init}
-azul <- Azul()
-azul
+```{r azul-hca-init}
+hca <- Azul()
+hca
 ```
+
+## Connecting to the AnVIL Data Explorer
+
+To connect to the AnVIL Data Explorer instead, specify the provider when
+creating the `Azul` object.
+
+```{r azul-anvil}
+anvil <- Azul(provider = "anvil")
+anvil
+```
+
+Note that the `host` field in the objects output changes to reflect the AnVIL
+Data Explorer service.
 
 ## Listing Catalogs
 
@@ -69,7 +82,7 @@ Azul organizes data into catalogs. You can list the available catalogs using
 `listCatalogs()`.
 
 ```{r list-catalogs}
-listCatalogs(azul)
+listCatalogs(hca)
 ```
 
 ## Exploring Projects
@@ -78,7 +91,7 @@ To get a quick overview of the projects in a catalog, use `projectTable()`.
 This returns a `tibble` with project names and their corresponding IDs.
 
 ```{r project-table}
-projects <- projectTable(azul, catalog = "dcp56")
+projects <- projectTable(hca, catalog = "dcp56")
 head(projects)
 ```
 
@@ -89,14 +102,14 @@ and group data. You can list the available facets for a catalog using
 `availableFacets()`.
 
 ```{r available-facets}
-facets <- availableFacets(azul, catalog = "dcp56")
+facets <- availableFacets(hca, catalog = "dcp56")
 head(facets)
 ```
 
 You can also get a summary of values for a specific facet using `facetTable()`.
 
 ```{r facet-table}
-facetTable(azul, facet = "genusSpecies", catalog = "dcp56")
+facetTable(hca, facet = "genusSpecies", catalog = "dcp56")
 ```
 
 # Filtering and Queries
@@ -127,7 +140,7 @@ vignette.
 
 ```{r import-to-terra, eval=FALSE}
 importToTerra(
-    azul,
+    hca,
     namespace = "your-terra-namespace",
     name = "your-terra-workspace",
     catalog = "dcp56",

@@ -9,7 +9,7 @@
 \title{The R Interface to the Human Cell Atlas Data Portal}
 \usage{
 Azul(
-  hostname = "service.azul.data.humancellatlas.org",
+  provider = c("hca", "anvil"),
   protocol = "https",
   api. = "/openapi.json",
   token = character()
@@ -18,8 +18,9 @@ Azul(
 \S4method{operations}{Azul}(x, ..., .deprecated = FALSE)
 }
 \arguments{
-\item{hostname}{\code{character(1)} The internet location of the service (default:
-'service.azul.data.humancellatlas.org').}
+\item{provider}{\code{character(1)} The data provider to connect to. Options
+include "hca" for the Human Cell Atlas and "anvil" for the AnVIL Data
+Explorer (default: "hca").}
 
 \item{protocol}{\code{character(1)} The internet protocol used to access the
 hostname (default: 'https')}

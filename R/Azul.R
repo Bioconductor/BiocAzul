@@ -54,8 +54,9 @@
 
 #' @rdname Azul
 #'
-#' @param hostname `character(1)` The internet location of the service (default:
-#'   'service.azul.data.humancellatlas.org').
+#' @param provider `character(1)` The data provider to connect to. Options
+#'   include "hca" for the Human Cell Atlas and "anvil" for the AnVIL Data
+#'   Explorer (default: "hca").
 #'
 #' @param protocol `character(1)` The internet protocol used to access the
 #'   hostname (default: 'https')
@@ -72,13 +73,18 @@
 #' azul <- Azul()
 #' @export
 Azul <- function(
-    hostname = "service.azul.data.humancellatlas.org",
+    provider = c("hca", "anvil"),
     protocol = "https",
     api. = "/openapi.json",
     token = character()
 ) {
     if (length(token))
         token <- .handle_token(token)
+    hostname <- switch(
+        match.arg(provider),
+        hca = "service.azul.data.humancellatlas.org",
+        anvil = "service.explore.anvilproject.org"
+    )
     apiUrl <- paste0(protocol, "://", hostname, api.)
     service <- withCallingHandlers({
         Service(
