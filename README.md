@@ -22,7 +22,7 @@ library(BiocAzul)
 
 The `BiocAzul` package provides an interface to the Azul API, which is
 used to index data from the Human Cell Atlas (HCA) and the AnVIL Data
-Explorer. Azul provides a powerful query interface for searching and
+Explorer. Azul provides a convenient query interface for searching and
 retrieving data from these projects.
 
 # Basic Usage
@@ -31,29 +31,62 @@ To get started, create an `Azul` service object. By default, it connects
 to the Human Cell Atlas service.
 
 ``` r
-azul <- Azul()
-azul
+hca <- Azul()
+hca
 #> service: azul
 #> host: service.azul.data.humancellatlas.org
 #> tags(); use azul$<tab completion>:
 #> # A tibble: 25 × 3
-#>    tag       operation                                     summary
-#>    <chr>     <chr>                                         <chr>  
-#>  1 Auxiliary Basic_health_check                            Basic …
-#>  2 Auxiliary Cached_health_check_for_continuous_monitoring Cached…
-#>  3 Auxiliary Complete_health_check                         Comple…
-#>  4 Auxiliary Describe_current_version_of_this_REST_API     Descri…
-#>  5 Auxiliary Fast_health_check                             Fast h…
-#>  6 Auxiliary Redirect_to_the_Swagger_UI_for_interactive_u… Redire…
-#>  7 Auxiliary Return_OpenAPI_specifications_for_this_REST_… Return…
-#>  8 Auxiliary Robots_Exclusion_Protocol                     Robots…
-#>  9 Auxiliary Selective_health_check                        Select…
-#> 10 Auxiliary Static_files_needed_for_the_Swagger_UI        Static…
+#>    tag       operation                                                       summary                                        
+#>    <chr>     <chr>                                                           <chr>                                          
+#>  1 Auxiliary Basic_health_check                                              Basic health check                             
+#>  2 Auxiliary Cached_health_check_for_continuous_monitoring                   Cached health check for continuous monitoring  
+#>  3 Auxiliary Complete_health_check                                           Complete health check                          
+#>  4 Auxiliary Describe_current_version_of_this_REST_API                       Describe current version of this REST API      
+#>  5 Auxiliary Fast_health_check                                               Fast health check                              
+#>  6 Auxiliary Redirect_to_the_Swagger_UI_for_interactive_use_of_this_REST_API Redirect to the Swagger UI for interactive use…
+#>  7 Auxiliary Return_OpenAPI_specifications_for_this_REST_API                 Return OpenAPI specifications for this REST API
+#>  8 Auxiliary Robots_Exclusion_Protocol                                       Robots Exclusion Protocol                      
+#>  9 Auxiliary Selective_health_check                                          Selective health check                         
+#> 10 Auxiliary Static_files_needed_for_the_Swagger_UI                          Static files needed for the Swagger UI         
 #> # ℹ 15 more rows
 #> tag values:
 #>   Auxiliary, Index, Manifests, Repository
 #> schemas():
 ```
+
+## Connecting to the AnVIL Data Explorer
+
+To connect to the AnVIL Data Explorer instead, specify the provider when
+creating the `Azul` object.
+
+``` r
+anvil <- Azul(provider = "anvil")
+anvil
+#> service: azul
+#> host: service.explore.anvilproject.org
+#> tags(); use azul$<tab completion>:
+#> # A tibble: 25 × 3
+#>    tag       operation                                                       summary                                        
+#>    <chr>     <chr>                                                           <chr>                                          
+#>  1 Auxiliary Basic_health_check                                              Basic health check                             
+#>  2 Auxiliary Cached_health_check_for_continuous_monitoring                   Cached health check for continuous monitoring  
+#>  3 Auxiliary Complete_health_check                                           Complete health check                          
+#>  4 Auxiliary Describe_current_version_of_this_REST_API                       Describe current version of this REST API      
+#>  5 Auxiliary Fast_health_check                                               Fast health check                              
+#>  6 Auxiliary Redirect_to_the_Swagger_UI_for_interactive_use_of_this_REST_API Redirect to the Swagger UI for interactive use…
+#>  7 Auxiliary Return_OpenAPI_specifications_for_this_REST_API                 Return OpenAPI specifications for this REST API
+#>  8 Auxiliary Robots_Exclusion_Protocol                                       Robots Exclusion Protocol                      
+#>  9 Auxiliary Selective_health_check                                          Selective health check                         
+#> 10 Auxiliary Static_files_needed_for_the_Swagger_UI                          Static files needed for the Swagger UI         
+#> # ℹ 15 more rows
+#> tag values:
+#>   Auxiliary, Index, Manifests, Repository
+#> schemas():
+```
+
+Note that the `host` field in the objects output changes to reflect the
+AnVIL Data Explorer service.
 
 ## Listing Catalogs
 
@@ -61,9 +94,8 @@ Azul organizes data into catalogs. You can list the available catalogs
 using `listCatalogs()`.
 
 ``` r
-listCatalogs(azul)
-#> [1] "dcp56"    "dcp56-it" "dcp57"    "dcp57-it" "lm10"    
-#> [6] "lm10-it"
+listCatalogs(hca)
+#> [1] "dcp57"    "dcp57-it" "dcp58"    "dcp58-it" "lm10"     "lm10-it"
 ```
 
 ## Exploring Projects
@@ -73,17 +105,17 @@ To get a quick overview of the projects in a catalog, use
 corresponding IDs.
 
 ``` r
-projects <- projectTable(azul, catalog = "dcp56")
+projects <- projectTable(hca, catalog = "dcp57")
 head(projects)
 #> # A tibble: 6 × 3
-#>   term                                             count projectId
-#>   <chr>                                            <int> <chr>    
-#> 1 -Human-10x3pv2--21                                   1 888f1766…
-#> 2 1M Neurons                                           1 74b6d569…
-#> 3 AIDA                                                 1 f0f89c14…
-#> 4 AIDA_DataFreeze_v2_JP                                1 35d5b057…
-#> 5 AIDA_DataFreeze_v2_TH                                1 76bc0e97…
-#> 6 ASingle-CellAtlasOfHumanPediatricLiverRevealsAg…     1 febdaddd…
+#>   term                                               count projectId                           
+#>   <chr>                                              <int> <chr>                               
+#> 1 -Human-10x3pv2--21                                     1 888f1766-4c84-43bb-8717-b5f9d2046097
+#> 2 1M Neurons                                             1 74b6d569-3b11-42ef-b6b1-a0454522b4a0
+#> 3 AIDA                                                   1 f0f89c14-7460-4bab-9d42-22228a91f185
+#> 4 AIDA_DataFreeze_v2_JP                                  1 35d5b057-3daf-4ccd-8112-196194598893
+#> 5 AIDA_DataFreeze_v2_TH                                  1 76bc0e97-8cae-43d4-a647-477a13be47f9
+#> 6 ASingle-CellAtlasOfHumanPediatricLiverRevealsAge-R     1 febdaddd-ad3c-4f4a-820f-ade15c48545a
 ```
 
 ## Exploring Facets
@@ -93,21 +125,21 @@ filter and group data. You can list the available facets for a catalog
 using `availableFacets()`.
 
 ``` r
-facets <- availableFacets(azul, catalog = "dcp56")
+facets <- availableFacets(hca, catalog = "dcp57")
 head(facets)
-#> [1] "organ"              "sampleEntityType"   "dataUseRestriction"
-#> [4] "project"            "sampleDisease"      "nucleicAcidSource"
+#> [1] "organ"              "sampleEntityType"   "dataUseRestriction" "project"            "sampleDisease"     
+#> [6] "nucleicAcidSource"
 ```
 
 You can also get a summary of values for a specific facet using
 `facetTable()`.
 
 ``` r
-facetTable(azul, facet = "genusSpecies", catalog = "dcp56")
+facetTable(hca, facet = "genusSpecies", catalog = "dcp57")
 #> # A tibble: 3 × 2
 #>   term                   count
 #>   <chr>                  <int>
-#> 1 Homo sapiens             505
+#> 1 Homo sapiens             506
 #> 2 Mus musculus              55
 #> 3 canis lupus familiaris     1
 ```
@@ -155,10 +187,10 @@ this vignette.
 
 ``` r
 importToTerra(
-    azul,
+    hca,
     namespace = "your-terra-namespace",
     name = "your-terra-workspace",
-    catalog = "dcp56",
+    catalog = "dcp57",
     filters = filter
 )
 ```
