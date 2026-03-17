@@ -152,14 +152,14 @@ filter criteria.
 
 ``` r
 filter <- makeFilter(
-    ~ projectId == "74b6d569-3b11-42ef-b6b1-a0454522b4a0" &
+    ~  specimenOrgan == "brain" &
         genusSpecies == "Mus musculus" &
         fileFormat == "h5"
 )
 filter
-#> $projectId
-#> $projectId$is
-#> [1] "74b6d569-3b11-42ef-b6b1-a0454522b4a0"
+#> $specimenOrgan
+#> $specimenOrgan$is
+#> [1] "brain"
 #> 
 #> 
 #> $genusSpecies
