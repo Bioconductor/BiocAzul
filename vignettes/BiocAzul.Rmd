@@ -154,7 +154,7 @@ job in Terra, and poll for its completion.
 # Session Information
 
 <details>
-  <summary>Click to see session information</summary>
+<summary>Click to see session information</summary>
 
 ```{r session-info}
 sessionInfo()
