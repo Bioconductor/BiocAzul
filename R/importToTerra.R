@@ -100,6 +100,14 @@
 #'
 #' @seealso [makeFilter()]
 #'
+#' @returns Called for the side effect of importing data into the specified
+#'   Terra workspace. If successful, returns a list with the following elements:
+#'   - `jobId`: The unique identifier for the import job created in Terra.
+#'   - `status`: The final status of the import job, which should be "Done" if
+#'     the import was successful.
+#'   - `elapsed`: The total time taken for the import job to complete, in
+#'     seconds.
+#'
 #' @examplesIf interactive()
 #' azul <- Azul()
 #' importToTerra(

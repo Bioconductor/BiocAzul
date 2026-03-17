@@ -29,6 +29,17 @@ given by \code{listCatalogs(api)}.}
 Currently, only "terra.pfb" is supported, which prepares the manifest in a
 format suitable for import into Terra.}
 }
+\value{
+Called for the side effect of importing data into the specified
+Terra workspace. If successful, returns a list with the following elements:
+\itemize{
+\item \code{jobId}: The unique identifier for the import job created in Terra.
+\item \code{status}: The final status of the import job, which should be "Done" if
+the import was successful.
+\item \code{elapsed}: The total time taken for the import job to complete, in
+seconds.
+}
+}
 \description{
 This function is intended to facilitate the import of data from
 the Human Cell Atlas Data Portal or the AnVIL Data Repository. It is
