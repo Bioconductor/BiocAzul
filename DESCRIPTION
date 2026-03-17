@@ -25,6 +25,11 @@ Suggests:
     knitr,
     rmarkdown,
     tinytest
+biocViews:
+    Software,
+    Infrastructure,
+    DataImport,
+    ThirdPartyClient
 VignetteBuilder: knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
