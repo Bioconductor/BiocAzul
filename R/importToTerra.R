@@ -216,10 +216,11 @@ importToTerra <- function(
             status <- jobStatus[["status"]]
             if (status %in% terminal_states) {
                 pb$terminate()
+                msg <- jobStatus[["message"]]
                 if (identical(status, "Error"))
                     stop(
                         "Import job failed (jobId: ", jobId, "):\n  ",
-                        jobStatus[["message"]] %||% "no details provided"
+                        msg %||% "no details provided"
                     )
                 message(
                     "Import complete in ", round(elapsed), " seconds"
