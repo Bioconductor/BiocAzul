@@ -36,14 +36,24 @@ projectTable <- function(
         "Invalid catalog specified. Use 'listCatalogs()' for all catalogs." =
             catalog %in% listCatalogs(api)
     )
+    service <- .service(api)
+    enttype <- switch(service, hca = "projects", anvil = "datasets")
     projs <- api$`Search_an_index_for_entities_of_interest\n.`(
-        catalog = catalog, entity_type = "projects"
+        catalog = catalog, entity_type = enttype
     ) |>
         content()
+    entity <- switch(
+        service, hca = enttype, anvil = paste0(enttype, ".title")
+    )
+    splitter <- c("termFacets", entity, "terms")
 
-    projs$termFacets$project$terms |>
-        dplyr::bind_rows() |>
-        tidyr::unnest(cols = "projectId")
+    projtab <- projs[[splitter]] |>
+        dplyr::bind_rows()
+
+    if (identical(service, "hca"))
+        tidyr::unnest(projtab, cols = "projectId")
+    else
+        projtab
 }
 
 #' @rdname Azul-utils
@@ -76,8 +86,10 @@ availableFacets <- function(api, catalog) {
         "Invalid catalog specified. Use 'listCatalogs()' for all catalogs." =
             catalog %in% listCatalogs(api)
     )
+    service <- .service(api)
+    enttype <- switch(service, hca = "projects", anvil = "datasets")
     projects <- api$`Search_an_index_for_entities_of_interest\n.`(
-        catalog = catalog, entity_type = "projects"
+        catalog = catalog, entity_type = enttype
     ) |>
         content()
     names(projects[["termFacets"]])
@@ -104,13 +116,17 @@ facetTable <-
         "Invalid catalog specified. Use 'listCatalogs()' for all catalogs." =
             catalog %in% listCatalogs(api)
     )
+    service <- .service(api)
+    enttype <- switch(service, hca = "projects", anvil = "datasets")
+
     projects <- api$`Search_an_index_for_entities_of_interest\n.`(
-        catalog = catalog, entity_type = "projects"
+        catalog = catalog, entity_type = enttype
     ) |>
         httr::content()
     allFacets <- names(projects[["termFacets"]])
     stopifnot("'facet' not found in termFacets" = facet %in% allFacets)
 
-    projects[["termFacets"]][[facet]][["terms"]] |>
+    splitter <- c("termFacets", facet, "terms")
+    projects[[splitter]] |>
         dplyr::bind_rows()
 }

@@ -27,3 +27,7 @@
         call. = FALSE
     )
 }
+
+.service <- function(api) {
+    api@service
+}
