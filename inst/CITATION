@@ -1,7 +1,14 @@
 bibentry(
     bibtype = "Manual",
     title = "BiocAzul: Programmatic Access to the Azul API via R",
-    author = "Marcel Ramos",
+    author = person(
+        "Marcel", "Ramos", , "marcel.ramos@sph.cuny.edu", c("aut", "cre"),
+        c(ORCID = "0000-0002-3242-0582")
+    ),
+    organization = person(
+        "Research Foundation of the City University of New York",
+        comment = c(ROR = "01d03cj21")
+    ),
     year = "2026",
     note = paste(
         "R package version 0.99.29",
