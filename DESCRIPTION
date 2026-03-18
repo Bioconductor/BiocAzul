@@ -1,6 +1,6 @@
 Package: BiocAzul
 Title: Programmatic Access to the Azul API via R
-Version: 0.99.29
+Version: 0.99.30
 Date: 2026-03-18
 Authors@R: c(
     person("Marcel", "Ramos", , "marcel.ramos@sph.cuny.edu", c("aut", "cre"),
