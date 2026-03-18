@@ -56,7 +56,7 @@ projectTable <- function(
     projtab <- projs[[splitter]] |>
         dplyr::bind_rows()
 
-    if (identical(service, "hca"))
+    if (identical(service, "hca") && is.list(projtab[["projectId"]]))
         tidyr::unnest(projtab, cols = "projectId")
     else
         projtab
