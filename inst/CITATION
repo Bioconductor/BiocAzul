@@ -1,3 +1,4 @@
+## meta <- packageDescription("BiocAzul")
 bibentry(
     bibtype = "Manual",
     title = "BiocAzul: Programmatic Access to the Azul API via R",
@@ -11,7 +12,7 @@ bibentry(
     ),
     year = "2026",
     note = paste(
-        "R package version 0.99.29",
+        "R package version ", meta[["Version"]],
         ". This work was supported by the NHGRI",
         "AnVIL Project (Grant No. U24HG010263)"
     ),
