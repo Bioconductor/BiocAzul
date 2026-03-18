@@ -1,5 +1,6 @@
 .api_header <- function(x) x@api_header
-.AZUL_API_REFERENCE_VERSION <- "15.1"
+.HCA_API_REFERENCE_VERSION <- "15.1"
+.ANVIL_API_REFERENCE_VERSION <- "15.1"
 
 #' @importFrom methods is
 .parse_token <- function(token_file) {
@@ -52,6 +53,29 @@
     slots = c(api_header = "character")
 )
 
+.create_service <- function(provider, hostname, protocol, api.) {
+    api_ref_version <- switch(
+        provider,
+        hca = .HCA_API_REFERENCE_VERSION,
+        anvil = .ANVIL_API_REFERENCE_VERSION
+    )
+    withCallingHandlers({
+        Service(
+            service = provider,
+            host = hostname,
+            authenticate = FALSE,
+            api_reference_version = api_ref_version,
+            api_reference_url = paste0(protocol, "://", hostname, api.),
+            package = "BiocAzul",
+            schemes = protocol
+        )
+    }, warning = function(w) {
+        if (!grepl("incomplete final line", w))
+            warning(w)
+        invokeRestart("muffleWarning")
+    })
+}
+
 #' @rdname Azul
 #'
 #' @param provider `character(1)` The data provider to connect to. Options
@@ -80,27 +104,13 @@ Azul <- function(
 ) {
     if (length(token))
         token <- .handle_token(token)
+    provider <- match.arg(provider)
     hostname <- switch(
-        match.arg(provider),
+        provider,
         hca = "service.azul.data.humancellatlas.org",
         anvil = "service.explore.anvilproject.org"
     )
-    apiUrl <- paste0(protocol, "://", hostname, api.)
-    service <- withCallingHandlers({
-        Service(
-            service = "azul",
-            host = hostname,
-            authenticate = FALSE,
-            api_reference_version = .AZUL_API_REFERENCE_VERSION,
-            api_reference_url = apiUrl,
-            package = "BiocAzul",
-            schemes = protocol
-        )
-    }, warning = function(w) {
-        if (!grepl("incomplete final line", w))
-            warning(w)
-        invokeRestart("muffleWarning")
-    })
+    service <- .create_service(provider, hostname, protocol, api.)
     .Azul(
         service, api_header = token
     )
