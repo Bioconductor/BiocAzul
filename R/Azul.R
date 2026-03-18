@@ -94,7 +94,7 @@
 #' @importFrom AnVIL Service
 #'
 #' @examples
-#' azul <- Azul()
+#' hca <- Azul(provider = "hca")
 #' @export
 Azul <- function(
     provider = c("hca", "anvil"),

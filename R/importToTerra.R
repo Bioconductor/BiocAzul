@@ -109,9 +109,9 @@
 #'     seconds.
 #'
 #' @examplesIf interactive()
-#' azul <- Azul()
+#' hca <- Azul(provider = "hca")
 #' importToTerra(
-#'     azul,
+#'     hca,
 #'     namespace = "anvil-namespace",
 #'     name = "my-anvil-workspace",
 #'     catalog = "dcp57",

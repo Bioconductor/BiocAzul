@@ -59,15 +59,19 @@ options including "dcp57", "dcp58", and "lm10" (e.g., when using the Human
 Cell Atlas API).
 }
 \examples{
-azul <- Azul()
+hca <- Azul(provider = "hca")
 
-listCatalogs(azul)
-projectTable(azul, catalog = "dcp57")
+listCatalogs(hca)
+projectTable(hca, catalog = "dcp57")
 
-listCatalogs(azul)
+anvil <- Azul(provider = "anvil")
 
-availableFacets(azul, catalog = "dcp57")
+listCatalogs(anvil)
+projectTable(anvil, catalog = "anvil13")
+availableFacets(hca, catalog = "dcp57")
 
-facetTable(azul, "genusSpecies", "dcp57")
+availableFacets(anvil, catalog = "anvil13")
+facetTable(hca, "genusSpecies", "dcp57")
 
+facetTable(anvil, "donors.organism_type", "anvil13")
 }

@@ -22,11 +22,15 @@
 #'   each project.
 #'
 #' @examples
-#' azul <- Azul()
+#' hca <- Azul(provider = "hca")
 #'
-#' listCatalogs(azul)
-#' projectTable(azul, catalog = "dcp57")
+#' listCatalogs(hca)
+#' projectTable(hca, catalog = "dcp57")
 #'
+#' anvil <- Azul(provider = "anvil")
+#'
+#' listCatalogs(anvil)
+#' projectTable(anvil, catalog = "anvil13")
 #' @export
 projectTable <- function(
     api,
@@ -61,9 +65,6 @@ projectTable <- function(
 #' @returns * `listCatalogs`: A character vector of catalog names that are
 #'   available in the API.
 #'
-#' @examples
-#' listCatalogs(azul)
-#'
 #' @export
 listCatalogs <- function(api) {
     api$List_all_available_catalogs.() |>
@@ -78,8 +79,9 @@ listCatalogs <- function(api) {
 #'   available for querying in the specified catalog.
 #'
 #' @examples
-#' availableFacets(azul, catalog = "dcp57")
+#' availableFacets(hca, catalog = "dcp57")
 #'
+#' availableFacets(anvil, catalog = "anvil13")
 #' @export
 availableFacets <- function(api, catalog) {
     stopifnot(
@@ -100,14 +102,15 @@ availableFacets <- function(api, catalog) {
 #' @param facet `character(1)` a facet term for which to produce a table of
 #'   tallies. The available facets can be obtained with `availableFacets()`.
 #'
-#' @examples
-#' facetTable(azul, "genusSpecies", "dcp57")
-#'
 #' @returns * `facetTable`: A tibble with two columns: `term` and `count`. The
 #'   `term` column contains the unique values of the specified facet, and the
 #'   `count` column contains the number of occurrences of each term in the
 #'   projects of the specified catalog.
 #'
+#' @examples
+#' facetTable(hca, "genusSpecies", "dcp57")
+#'
+#' facetTable(anvil, "donors.organism_type", "anvil13")
 #' @export
 facetTable <-
     function(api, facet, catalog)

@@ -59,7 +59,7 @@ API object, e.g., \code{api$operation}
 \examples{
 showClass("Azul")
 
-azul <- Azul()
+hca <- Azul(provider = "hca")
 }
 \seealso{
 \link[AnVIL:Services]{AnVIL::Service}

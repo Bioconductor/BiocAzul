@@ -115,9 +115,9 @@ entities that have no organism age.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-azul <- Azul()
+hca <- Azul(provider = "hca")
 importToTerra(
-    azul,
+    hca,
     namespace = "anvil-namespace",
     name = "my-anvil-workspace",
     catalog = "dcp57",
