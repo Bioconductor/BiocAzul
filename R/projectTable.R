@@ -47,7 +47,9 @@ projectTable <- function(
     ) |>
         content()
     entity <- switch(
-        service, hca = enttype, anvil = paste0(enttype, ".title")
+        service,
+        hca = gsub("s", "", enttype),
+        anvil = paste0(enttype, ".title")
     )
     splitter <- c("termFacets", entity, "terms")
 
