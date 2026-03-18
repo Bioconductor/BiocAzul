@@ -1,5 +1,13 @@
 # setwd("~/bioc/BiocAzul")
-file_loc <- "inst/service/azul/openapi.json"
+## service <- "hca"
+## service <- "anvil"
+file_loc <- glue::glue("inst/service/{service}/openapi.json")
+
+service_url <- switch(
+    service,
+    hca = "service.azul.data.humancellatlas.org",
+    anvil = "service.explore.anvilproject.org"
+)
 
 download.file(
     url = "https://service.azul.data.humancellatlas.org/openapi.json",
@@ -8,10 +16,10 @@ download.file(
 
 apilines <- readLines("R/Azul.R")
 
-.AZUL_LINE <- ".AZUL_API_REFERENCE_VERSION <-"
+.API_LINE <- glue::glue(".{toupper(service)}_API_REFERENCE_VERSION <-")
 
 versionline <- grep(
-    pattern = .AZUL_LINE,
+    pattern = .API_LINE,
     x = apilines,
     fixed = TRUE,
     value = TRUE
@@ -27,7 +35,7 @@ if (!identical(oldver, newver)) {
     writeLines(apilines, con = file("R/Azul.R"))
 
     ## update the API file
-    oldwd <- setwd("inst/service/azul")
+    oldwd <- setwd(glue::glue("inst/service/{service}"))
     on.exit(setwd(oldwd))
     system2(
         command = "api-spec-converter",
