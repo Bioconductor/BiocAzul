@@ -1,5 +1,5 @@
 Package: BiocAzul
-Title: Programmatic Access to the Azul API via R
+Title: Programmatic Access to the Azul API
 Version: 0.99.30
 Date: 2026-03-18
 Authors@R: c(

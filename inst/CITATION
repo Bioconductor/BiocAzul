@@ -1,7 +1,7 @@
 ## meta <- packageDescription("BiocAzul")
 bibentry(
     bibtype = "Manual",
-    title = "BiocAzul: Programmatic Access to the Azul API via R",
+    title = "BiocAzul: Programmatic Access to the Azul API",
     author = person(
         "Marcel", "Ramos", , "marcel.ramos@sph.cuny.edu", c("aut", "cre"),
         c(ORCID = "0000-0002-3242-0582")
