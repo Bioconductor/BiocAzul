@@ -11,15 +11,10 @@ bibentry(
         comment = c(ROR = "01d03cj21")
     ),
     year = "2026",
-    note = paste(
+    note = paste0(
         "R package version ", meta[["Version"]],
-        ". This work was supported by the NHGRI",
+        ". This work was supported by the NHGRI ",
         "AnVIL Project (Grant No. U24HG010263)"
     ),
-    url = "https://github.com/Bioconductor/BiocAzul",
-    textVersion = paste(
-        "Ramos, M. (2026). BiocAzul: Programmatic Access to the Azul API via R",
-        "R package version 0.99.29. This work was supported by the NHGRI AnVIL",
-        "Project (Grant No. U24HG010263)."
-    )
+    url = "https://github.com/Bioconductor/BiocAzul"
 )
