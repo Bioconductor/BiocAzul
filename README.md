@@ -172,8 +172,13 @@ filter
 #> [1] "h5"
 ```
 
-This filter can be used in other functions that interact with the Azul
-API.
+The filter created above filters for projects that have specimens from
+the brain, are from the species Mus musculus, and have files in the h5
+format. This filter can be used in `importToTerra()` to import data that
+matches these criteria. The image below shows the same filter applied
+via the HCA Data Explorer interface.
+
+<img src="man/figures/filter_sidebar.png" alt="" width="100%" />
 
 # Integration with Terra
 
@@ -195,8 +200,25 @@ importToTerra(
 )
 ```
 
-This function will create a manifest based on the filters, initiate an
-import job in Terra, and poll for its completion.
+The equivalent operation in the Terra UI involves selecting a dataset
+for import and clicking the “Request Link” button. See the image below
+for an example.
+
+<img src="man/figures/request_link.png" alt="" width="100%" />
+
+Once the link is requested, the user will be able to import the data
+into their workspace. The image below shows how the user can select
+“Create a new workspace” to import the data into a new Terra workspace.
+
+<img src="man/figures/create_workspace.png" alt="" width="100%" />
+
+# Conclusion
+
+The `importToTerra()` function conveniently simplifies the data import
+process. By providing the desired filters and workspace information,
+users can programmatically create a manifest, initiate the import job in
+Terra, and poll for its completion, all without needing to interact with
+the Terra UI.
 
 # Session Information
 

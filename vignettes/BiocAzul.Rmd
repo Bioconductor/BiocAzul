@@ -127,7 +127,18 @@ filter <- makeFilter(
 filter
 ```
 
-This filter can be used in other functions that interact with the Azul API.
+The filter created above filters for projects that have specimens from the
+brain, are from the species Mus musculus, and have files in the h5 format. This
+filter can be used in `importToTerra()` to import data that matches these
+criteria. The image below shows the same filter applied via the HCA Data
+Explorer interface.
+
+```{r filter_sidebar, echo=FALSE, out.width="100%"}
+img_path <-
+    if (knitr::opts_knit$get("child")) "man/figures/" else "../man/figures/"
+knitr::include_graphics(paste0(img_path, "filter_sidebar.png"))
+```
+
 
 # Integration with Terra
 
@@ -148,8 +159,29 @@ importToTerra(
 )
 ```
 
-This function will create a manifest based on the filters, initiate an import
-job in Terra, and poll for its completion.
+The equivalent operation in the Terra UI involves selecting a dataset for import
+and clicking the "Request Link" button. See the image below for an example.
+
+```{r terra_import, echo=FALSE, out.width="100%"}
+knitr::include_graphics(paste0(img_path, "request_link.png"))
+```
+
+Once the link is requested, the user will be able to import the data into their
+workspace. The image below shows how the user can select "Create a new
+workspace" to import the data into a new Terra workspace.
+
+
+```{r create_workspace, echo=FALSE, out.width="100%"}
+knitr::include_graphics(paste0(img_path, "create_workspace.png"))
+```
+
+
+# Conclusion
+
+The `importToTerra()` function conveniently simplifies the data import process.
+By providing the desired filters and workspace information, users can
+programmatically create a manifest, initiate the import job in Terra, and poll
+for its completion, all without needing to interact with the Terra UI.
 
 # Session Information
 
