@@ -63,7 +63,6 @@
         Service(
             service = provider,
             host = hostname,
-            authenticate = FALSE,
             api_reference_version = api_ref_version,
             api_reference_url = paste0(protocol, "://", hostname, api.),
             package = "BiocAzul",
