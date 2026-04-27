@@ -1,6 +1,6 @@
 .api_header <- function(x) x@api_header
 .HCA_API_REFERENCE_VERSION <- "16.1"
-.ANVIL_API_REFERENCE_VERSION <- "15.1"
+.ANVIL_API_REFERENCE_VERSION <- "16.1"
 
 #' @importFrom methods is
 .parse_token <- function(token_file) {
