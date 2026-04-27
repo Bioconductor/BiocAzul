@@ -10,7 +10,7 @@ service_url <- switch(
 )
 
 download.file(
-    url = "https://service.azul.data.humancellatlas.org/openapi.json",
+    url = glue::glue("https://{service_url}/openapi.json"),
     destfile = file_loc
 )
 
@@ -30,8 +30,8 @@ newver <-
 
 ## success -- updated API files and MD5
 if (!identical(oldver, newver)) {
-    lineIdx <- grep(pattern = .AZUL_LINE, x = apilines, fixed = TRUE)
-    apilines[lineIdx] <- paste0(.AZUL_LINE, " \"", newver, "\"")
+    lineIdx <- grep(pattern = .API_LINE, x = apilines, fixed = TRUE)
+    apilines[lineIdx] <- paste0(.API_LINE, " \"", newver, "\"")
     writeLines(apilines, con = file("R/Azul.R"))
 
     ## update the API file
