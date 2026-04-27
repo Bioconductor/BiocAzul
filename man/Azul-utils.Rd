@@ -62,7 +62,7 @@ Cell Atlas API).
 hca <- Azul(provider = "hca")
 
 listCatalogs(hca)
-projectTable(hca, catalog = "dcp57")
+projectTable(hca, catalog = "dcp58")
 
 anvil <- Azul(provider = "anvil")
 
