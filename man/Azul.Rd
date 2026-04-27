@@ -38,7 +38,7 @@ given by the \code{\link[=Azul]{Azul()}} function.}
 \verb{operations,Service-method}, to the internal \code{get_operation()}
 function.}
 
-\item{.deprecated}{optional logical(1) include deprecated operations?}
+\item{.deprecated}{optional \code{logical(1)} include deprecated operations?}
 }
 \value{
 An \code{Azul} object that can be used to interact with the Human Cell
