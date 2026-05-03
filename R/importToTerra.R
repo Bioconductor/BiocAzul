@@ -110,11 +110,13 @@
 #'
 #' @examplesIf interactive()
 #' hca <- Azul(provider = "hca")
+#' catalogs <- listCatalogs(hca)
+#' latest <- head(catalogs, n = 1)
 #' importToTerra(
 #'     hca,
 #'     namespace = "anvil-namespace",
 #'     name = "my-anvil-workspace",
-#'     catalog = "dcp57",
+#'     catalog = latest,
 #'     filters = list(
 #'         projectId = list(is = "74b6d569-3b11-42ef-b6b1-a0454522b4a0")
 #'     )

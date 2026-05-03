@@ -55,23 +55,31 @@ projects of the specified catalog.
 This function queries the specified catalog for projects and
 returns a tibble with project names and their corresponding IDs. The
 \code{catalog} parameter allows you to specify which catalog to query, with
-options including "dcp57", "dcp58", and "lm10" (e.g., when using the Human
+options including "dcp58", "dcp59", and "lm10" (e.g., when using the Human
 Cell Atlas API).
 }
 \examples{
 hca <- Azul(provider = "hca")
 
-listCatalogs(hca)
-projectTable(hca, catalog = "dcp58")
+catalogs <- listCatalogs(hca)
+latest <- head(catalogs, n = 1)
+projectTable(hca, catalog = latest)
 
 anvil <- Azul(provider = "anvil")
 
-listCatalogs(anvil)
-projectTable(anvil, catalog = "anvil13")
-availableFacets(hca, catalog = "dcp57")
+catalogs <- listCatalogs(anvil)
+latest <- head(catalogs, n = 1)
+projectTable(anvil, catalog = latest)
+catalogs <- listCatalogs(hca)
+latest <- head(catalogs, n = 1)
+availableFacets(hca, catalog = latest)
 
-availableFacets(anvil, catalog = "anvil13")
-facetTable(hca, "genusSpecies", "dcp57")
+catalogs <- listCatalogs(anvil)
+latest <- head(catalogs, n = 1)
+availableFacets(anvil, catalog = latest)
+catalogs <- listCatalogs(hca)
+latest <- head(catalogs, n = 1)
+facetTable(hca, "genusSpecies", latest)
 
-facetTable(anvil, "donors.organism_type", "anvil13")
+facetTable(anvil, "donors.organism_type", latest)
 }
