@@ -8,7 +8,6 @@ knit: (function(inputFile, encoding) {
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  cache = TRUE,
   out.width = "100%"
 )
 ```
