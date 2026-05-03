@@ -1,7 +1,7 @@
 Package: BiocAzul
 Title: Programmatic Access to the Azul API
-Version: 1.1.1
-Date: 2026-04-27
+Version: 1.1.2
+Date: 2026-05-03
 Authors@R: c(
     person("Marcel", "Ramos", , "marcel.ramos@sph.cuny.edu", c("aut", "cre"),
         c(ORCID = "0000-0002-3242-0582")),
