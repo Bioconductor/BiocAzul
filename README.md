@@ -33,22 +33,22 @@ to the Human Cell Atlas service.
 ``` r
 hca <- Azul()
 hca
-#> service: azul
+#> service: hca
 #> host: service.azul.data.humancellatlas.org
 #> tags(); use azul$<tab completion>:
 #> # A tibble: 25 × 3
-#>    tag       operation                                                       summary                                        
-#>    <chr>     <chr>                                                           <chr>                                          
-#>  1 Auxiliary Basic_health_check                                              Basic health check                             
-#>  2 Auxiliary Cached_health_check_for_continuous_monitoring                   Cached health check for continuous monitoring  
-#>  3 Auxiliary Complete_health_check                                           Complete health check                          
-#>  4 Auxiliary Describe_current_version_of_this_REST_API                       Describe current version of this REST API      
-#>  5 Auxiliary Fast_health_check                                               Fast health check                              
-#>  6 Auxiliary Redirect_to_the_Swagger_UI_for_interactive_use_of_this_REST_API Redirect to the Swagger UI for interactive use…
-#>  7 Auxiliary Return_OpenAPI_specifications_for_this_REST_API                 Return OpenAPI specifications for this REST API
-#>  8 Auxiliary Robots_Exclusion_Protocol                                       Robots Exclusion Protocol                      
-#>  9 Auxiliary Selective_health_check                                          Selective health check                         
-#> 10 Auxiliary Static_files_needed_for_the_Swagger_UI                          Static files needed for the Swagger UI         
+#>    tag       operation                                            summary
+#>    <chr>     <chr>                                                <chr>  
+#>  1 Auxiliary Basic_health_check                                   Basic …
+#>  2 Auxiliary Cached_health_check_for_continuous_monitoring        Cached…
+#>  3 Auxiliary Complete_health_check                                Comple…
+#>  4 Auxiliary Describe_current_version_of_this_REST_API            Descri…
+#>  5 Auxiliary Fast_health_check                                    Fast h…
+#>  6 Auxiliary Redirect_to_the_Swagger_UI_for_interactive_use_of_t… Redire…
+#>  7 Auxiliary Return_OpenAPI_specifications_for_this_REST_API      Return…
+#>  8 Auxiliary Robots_Exclusion_Protocol                            Robots…
+#>  9 Auxiliary Selective_health_check                               Select…
+#> 10 Auxiliary Static_files_needed_for_the_Swagger_UI               Static…
 #> # ℹ 15 more rows
 #> tag values:
 #>   Auxiliary, Index, Manifests, Repository
@@ -63,22 +63,22 @@ creating the `Azul` object.
 ``` r
 anvil <- Azul(provider = "anvil")
 anvil
-#> service: azul
+#> service: anvil
 #> host: service.explore.anvilproject.org
 #> tags(); use azul$<tab completion>:
 #> # A tibble: 25 × 3
-#>    tag       operation                                                       summary                                        
-#>    <chr>     <chr>                                                           <chr>                                          
-#>  1 Auxiliary Basic_health_check                                              Basic health check                             
-#>  2 Auxiliary Cached_health_check_for_continuous_monitoring                   Cached health check for continuous monitoring  
-#>  3 Auxiliary Complete_health_check                                           Complete health check                          
-#>  4 Auxiliary Describe_current_version_of_this_REST_API                       Describe current version of this REST API      
-#>  5 Auxiliary Fast_health_check                                               Fast health check                              
-#>  6 Auxiliary Redirect_to_the_Swagger_UI_for_interactive_use_of_this_REST_API Redirect to the Swagger UI for interactive use…
-#>  7 Auxiliary Return_OpenAPI_specifications_for_this_REST_API                 Return OpenAPI specifications for this REST API
-#>  8 Auxiliary Robots_Exclusion_Protocol                                       Robots Exclusion Protocol                      
-#>  9 Auxiliary Selective_health_check                                          Selective health check                         
-#> 10 Auxiliary Static_files_needed_for_the_Swagger_UI                          Static files needed for the Swagger UI         
+#>    tag       operation                                            summary
+#>    <chr>     <chr>                                                <chr>  
+#>  1 Auxiliary Basic_health_check                                   Basic …
+#>  2 Auxiliary Cached_health_check_for_continuous_monitoring        Cached…
+#>  3 Auxiliary Complete_health_check                                Comple…
+#>  4 Auxiliary Describe_current_version_of_this_REST_API            Descri…
+#>  5 Auxiliary Fast_health_check                                    Fast h…
+#>  6 Auxiliary Redirect_to_the_Swagger_UI_for_interactive_use_of_t… Redire…
+#>  7 Auxiliary Return_OpenAPI_specifications_for_this_REST_API      Return…
+#>  8 Auxiliary Robots_Exclusion_Protocol                            Robots…
+#>  9 Auxiliary Selective_health_check                               Select…
+#> 10 Auxiliary Static_files_needed_for_the_Swagger_UI               Static…
 #> # ℹ 15 more rows
 #> tag values:
 #>   Auxiliary, Index, Manifests, Repository
@@ -94,8 +94,12 @@ Azul organizes data into catalogs. You can list the available catalogs
 using `listCatalogs()`.
 
 ``` r
-listCatalogs(hca)
-#> [1] "dcp57"    "dcp57-it" "dcp58"    "dcp58-it" "lm10"     "lm10-it"
+catalogs <- listCatalogs(hca)
+catalogs
+#> [1] "dcp59"    "dcp59-it" "lm10"     "lm10-it"
+latest <- head(catalogs, n = 1)
+latest
+#> [1] "dcp59"
 ```
 
 ## Exploring Projects
@@ -105,17 +109,17 @@ To get a quick overview of the projects in a catalog, use
 corresponding IDs.
 
 ``` r
-projects <- projectTable(hca, catalog = "dcp57")
+projects <- projectTable(hca, catalog = latest)
 head(projects)
 #> # A tibble: 6 × 3
-#>   term                                               count projectId                           
-#>   <chr>                                              <int> <chr>                               
-#> 1 -Human-10x3pv2--21                                     1 888f1766-4c84-43bb-8717-b5f9d2046097
-#> 2 1M Neurons                                             1 74b6d569-3b11-42ef-b6b1-a0454522b4a0
-#> 3 AIDA                                                   1 f0f89c14-7460-4bab-9d42-22228a91f185
-#> 4 AIDA_DataFreeze_v2_JP                                  1 35d5b057-3daf-4ccd-8112-196194598893
-#> 5 AIDA_DataFreeze_v2_TH                                  1 76bc0e97-8cae-43d4-a647-477a13be47f9
-#> 6 ASingle-CellAtlasOfHumanPediatricLiverRevealsAge-R     1 febdaddd-ad3c-4f4a-820f-ade15c48545a
+#>   term                                               count projectId     
+#>   <chr>                                              <int> <chr>         
+#> 1 -Human-10x3pv2--21                                     1 888f1766-4c84…
+#> 2 1M Neurons                                             1 74b6d569-3b11…
+#> 3 AIDA                                                   1 f0f89c14-7460…
+#> 4 AIDA_DataFreeze_v2_JP                                  1 35d5b057-3daf…
+#> 5 AIDA_DataFreeze_v2_TH                                  1 76bc0e97-8cae…
+#> 6 ASingle-CellAtlasOfHumanPediatricLiverRevealsAge-R     1 febdaddd-ad3c…
 ```
 
 ## Exploring Facets
@@ -125,21 +129,21 @@ filter and group data. You can list the available facets for a catalog
 using `availableFacets()`.
 
 ``` r
-facets <- availableFacets(hca, catalog = "dcp57")
+facets <- availableFacets(hca, catalog = latest)
 head(facets)
-#> [1] "organ"              "sampleEntityType"   "dataUseRestriction" "project"            "sampleDisease"     
-#> [6] "nucleicAcidSource"
+#> [1] "organ"              "sampleEntityType"   "dataUseRestriction"
+#> [4] "project"            "sampleDisease"      "nucleicAcidSource"
 ```
 
 You can also get a summary of values for a specific facet using
 `facetTable()`.
 
 ``` r
-facetTable(hca, facet = "genusSpecies", catalog = "dcp57")
+facetTable(hca, facet = "genusSpecies", catalog = latest)
 #> # A tibble: 3 × 2
 #>   term                   count
 #>   <chr>                  <int>
-#> 1 Homo sapiens             506
+#> 1 Homo sapiens             508
 #> 2 Mus musculus              55
 #> 3 canis lupus familiaris     1
 ```
@@ -195,7 +199,7 @@ importToTerra(
     hca,
     namespace = "your-terra-namespace",
     name = "your-terra-workspace",
-    catalog = "dcp57",
+    catalog = "dcp58",
     filters = filter
 )
 ```
@@ -231,12 +235,13 @@ Click to see session information
 
 ``` r
 sessionInfo()
-#> R Under development (unstable) (2025-10-28 r88973)
+#> R version 4.6.0 RC (2026-04-22 r89945)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.4 LTS
 #> 
 #> Matrix products: default
-#> BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+#> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
+#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
 #> 
 #> locale:
 #>  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -250,51 +255,32 @@ sessionInfo()
 #> tzcode source: system (glibc)
 #> 
 #> attached base packages:
-#> [1] stats     graphics  grDevices utils     datasets  methods  
-#> [7] base     
+#> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] tinytest_1.4.1      BiocManager_1.30.27 BiocAzul_0.99.11   
-#> [4] AnVIL_1.23.7        AnVILBase_1.5.1     dplyr_1.1.4        
-#> [7] colorout_1.3-2     
+#> [1] BiocAzul_1.1.1  AnVIL_1.25.0    AnVILBase_1.7.0 dplyr_1.2.1    
+#> [5] colorout_1.3-2 
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] xfun_0.56            httr2_1.2.2         
-#>  [3] htmlwidgets_1.6.4    devtools_2.4.6      
-#>  [5] remotes_2.5.0        vctrs_0.6.5         
-#>  [7] tools_4.6.0          generics_0.1.4      
-#>  [9] parallel_4.6.0       curl_7.0.0          
-#> [11] tibble_3.3.0         pkgconfig_2.0.3     
-#> [13] BiocBaseUtils_1.13.0 rapiclient_0.1.8    
-#> [15] desc_1.4.3           lifecycle_1.0.4     
-#> [17] compiler_4.6.0       credentials_2.0.3   
-#> [19] BiocStyle_2.39.0     codetools_0.2-20    
-#> [21] BiocAddins_0.99.26   httpuv_1.6.16       
-#> [23] htmltools_0.5.9      sys_3.4.3           
-#> [25] usethis_3.2.1        yaml_2.3.12         
-#> [27] later_1.4.4          pillar_1.11.1       
-#> [29] tidyr_1.3.1          GCPtools_1.1.0      
-#> [31] ellipsis_0.3.2       openssl_2.3.4       
-#> [33] rsconnect_1.7.0      DT_0.34.0           
-#> [35] cachem_1.1.0         sessioninfo_1.2.3   
-#> [37] mime_0.13            tidyselect_1.2.1    
-#> [39] digest_0.6.39        purrr_1.2.0         
-#> [41] fastmap_1.2.0        cli_3.6.5           
-#> [43] magrittr_2.0.4       utf8_1.2.6          
-#> [45] pkgbuild_1.4.8       withr_3.0.2         
-#> [47] promises_1.5.0       rappdirs_0.3.4      
-#> [49] rmarkdown_2.30       lambda.r_1.2.4      
-#> [51] httr_1.4.7           otel_0.2.0          
-#> [53] futile.logger_1.4.9  askpass_1.2.1       
-#> [55] memoise_2.0.1        shiny_1.12.1        
-#> [57] evaluate_1.0.5       knitr_1.51          
-#> [59] miniUI_0.1.2         rlang_1.1.6         
-#> [61] futile.options_1.0.1 gert_2.3.1          
-#> [63] Rcpp_1.1.1           xtable_1.8-4        
-#> [65] glue_1.8.0           formatR_1.14        
-#> [67] pkgload_1.4.1        rstudioapi_0.18.0   
-#> [69] jsonlite_2.0.0       R6_2.6.1            
-#> [71] fs_1.6.6
+#>  [1] utf8_1.2.6           rappdirs_0.3.4       generics_0.1.4      
+#>  [4] tidyr_1.3.2          futile.options_1.0.1 hms_1.1.4           
+#>  [7] digest_0.6.39        magrittr_2.0.5       evaluate_1.0.5      
+#> [10] fastmap_1.2.0        jsonlite_2.0.0       progress_1.2.3      
+#> [13] formatR_1.14         promises_1.5.0       httr_1.4.8          
+#> [16] purrr_1.2.2          rapiclient_0.1.8     codetools_0.2-20    
+#> [19] httr2_1.2.2          cli_3.6.6            shiny_1.13.0        
+#> [22] rlang_1.2.0          crayon_1.5.3         futile.logger_1.4.9 
+#> [25] withr_3.0.2          yaml_2.3.12          otel_0.2.0          
+#> [28] BiocBaseUtils_1.15.0 tools_4.6.0          httpuv_1.6.17       
+#> [31] DT_0.34.0            lambda.r_1.2.4       GCPtools_1.3.0      
+#> [34] curl_7.1.0           vctrs_0.7.3          R6_2.6.1            
+#> [37] mime_0.13            lifecycle_1.0.5      htmlwidgets_1.6.4   
+#> [40] miniUI_0.1.2         pkgconfig_2.0.3      pillar_1.11.1       
+#> [43] later_1.4.8          glue_1.8.1           Rcpp_1.1.1-1.1      
+#> [46] xfun_0.57            tibble_3.3.1         tidyselect_1.2.1    
+#> [49] keyring_1.4.1        rstudioapi_0.18.0    knitr_1.51          
+#> [52] xtable_1.8-8         htmltools_0.5.9      rmarkdown_2.31      
+#> [55] compiler_4.6.0       prettyunits_1.2.0
 ```
 
 </details>
