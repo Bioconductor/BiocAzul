@@ -116,13 +116,13 @@ entities that have no organism age.
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 hca <- Azul(provider = "hca")
-catalogs <- listCatalogs(hca)
-latest <- head(catalogs, n = 1)
+hca_cat <- listCatalogs(hca) |>
+    head(n = 1)
 importToTerra(
     hca,
     namespace = "anvil-namespace",
     name = "my-anvil-workspace",
-    catalog = latest,
+    catalog = hca_cat,
     filters = list(
         projectId = list(is = "74b6d569-3b11-42ef-b6b1-a0454522b4a0")
     )
