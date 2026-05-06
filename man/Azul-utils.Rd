@@ -61,25 +61,19 @@ Cell Atlas API).
 \examples{
 hca <- Azul(provider = "hca")
 
-catalogs <- listCatalogs(hca)
-latest <- head(catalogs, n = 1)
-projectTable(hca, catalog = latest)
+hca_cat <- listCatalogs(hca) |>
+    head(n = 1L)
+projectTable(hca, catalog = hca_cat)
 
 anvil <- Azul(provider = "anvil")
 
-catalogs <- listCatalogs(anvil)
-latest <- head(catalogs, n = 1)
-projectTable(anvil, catalog = latest)
-catalogs <- listCatalogs(hca)
-latest <- head(catalogs, n = 1)
-availableFacets(hca, catalog = latest)
+anvil_cat <- listCatalogs(anvil) |>
+    head(n = 1L)
+projectTable(anvil, catalog = anvil_cat)
+availableFacets(hca, catalog = hca_cat)
 
-catalogs <- listCatalogs(anvil)
-latest <- head(catalogs, n = 1)
-availableFacets(anvil, catalog = latest)
-catalogs <- listCatalogs(hca)
-latest <- head(catalogs, n = 1)
-facetTable(hca, "genusSpecies", latest)
+availableFacets(anvil, catalog = anvil_cat)
+facetTable(hca, "genusSpecies", hca_cat)
 
-facetTable(anvil, "donors.organism_type", latest)
+facetTable(anvil, "donors.organism_type", anvil_cat)
 }
